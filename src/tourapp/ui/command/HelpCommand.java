@@ -9,14 +9,14 @@ public class HelpCommand extends BaseCommand {
     @Override
     public void execute() {
         System.out.println("Program help:");
-        System.out.println("- Load catalog from file: initialize initial set of tours;");
-        System.out.println("- Save catalog to file: write current catalog to disk;");
-        System.out.println("- View all tours: show all available tours;");
-        System.out.println("- Add / Edit / Delete tour: manage tour catalog;");
-        System.out.println("- Search / Filter: find tours by parameters;");
-        System.out.println("- Sort tours: order tours by price, days, rating;");
-        System.out.println("- Favorite tours: manage list of preferred tours;");
-        System.out.println("- Bookings: create and manage preliminary bookings;");
-        System.out.println("- Exit: terminate the application.");
+        System.out.println("1. Load catalog from file - initialize tour list from file.");
+        System.out.println("2. Save catalog to file - save current tour list to file.");
+        System.out.println("3. View all tours - print all available tours.");
+        System.out.println("4. Add / Edit / Delete tour - manage tour catalog.");
+        System.out.println("7. Search / filter tours - find tours by type, country, transport, food, days, price.");
+        System.out.println("8. Sort tours - order tours by price, days, or rating.");
+        System.out.println("9. Favorite tours - manage list of preferred tours.");
+        System.out.println("10. Bookings - create and manage bookings.");
+        System.out.println("12. Exit - terminate the application.");
     }
 }

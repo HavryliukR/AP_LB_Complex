@@ -1,5 +1,7 @@
 package tourapp.ui.command;
 
+import java.util.Scanner;
+
 public class DeleteTourCommand extends BaseCommand {
 
     public DeleteTourCommand(ApplicationContext context) {
@@ -8,7 +10,15 @@ public class DeleteTourCommand extends BaseCommand {
 
     @Override
     public void execute() {
-        System.out.println("[Command] Delete tour (logic will be implemented on stage 3).");
-        context.getCatalogManager().deleteTour();
+        Scanner scanner = context.getScanner();
+        System.out.println("--- Delete tour ---");
+
+        long id = ConsoleInputUtils.readLong(scanner, "Enter tour id to delete: ");
+        boolean ok = context.getCatalogManager().deleteTour(id);
+        if (ok) {
+            System.out.println("Tour deleted successfully.");
+        } else {
+            System.out.println("Tour with id " + id + " not found.");
+        }
     }
 }

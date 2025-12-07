@@ -4,9 +4,6 @@ import tourapp.core.TourCatalogManager;
 
 import java.util.Scanner;
 
-/**
- * Application context: shared objects used by commands.
- */
 public class ApplicationContext {
 
     private final Scanner scanner;

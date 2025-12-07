@@ -1,8 +1,5 @@
 package tourapp.ui.menu;
 
-/**
- * Enum representing main menu options.
- */
 public enum MenuOption {
     LOAD_FROM_FILE(1, "Load catalog from file"),
     SAVE_TO_FILE(2, "Save catalog to file"),

@@ -12,7 +12,12 @@ public class SaveToFileCommand extends BaseCommand {
     public void execute() {
         Scanner scanner = context.getScanner();
         System.out.print("Enter path to file for saving catalog: ");
-        String path = scanner.nextLine();
+        String path = scanner.nextLine().trim();
+
+        if (path.isEmpty()) {
+            System.out.println("Path cannot be empty.");
+            return;
+        }
 
         context.getCatalogManager().saveToFile(path);
     }

@@ -6,9 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-/**
- * Console menu that prints options and executes corresponding commands.
- */
 public class ConsoleMenu {
 
     private final ApplicationContext context;

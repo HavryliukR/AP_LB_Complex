@@ -13,8 +13,8 @@ public class TourApp {
         TourCatalogManager catalogManager = new TourCatalogManager();
 
         ApplicationContext context = new ApplicationContext(scanner, catalogManager);
-
         ConsoleMenu menu = new ConsoleMenu(context);
+
         menu.start();
 
         scanner.close();
