@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="guicedee.services.jakarta.mail" type="repository">
+    <properties maven-id="com.guicedee.services:jakarta.mail:1.2.2.1-jre17" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/guicedee/services/jakarta.mail/1.2.2.1-jre17/jakarta.mail-1.2.2.1-jre17.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

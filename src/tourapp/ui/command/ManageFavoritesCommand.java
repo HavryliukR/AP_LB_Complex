@@ -1,11 +1,14 @@
 package tourapp.ui.command;
 
-import tourapp.model.Tour;
+import tourapp.core.TourCatalogManager;
+import tourapp.logging.LoggingConfig;
 
-import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class ManageFavoritesCommand extends BaseCommand {
+
+    private static final Logger LOGGER = LoggingConfig.getLogger(ManageFavoritesCommand.class);
 
     public ManageFavoritesCommand(ApplicationContext context) {
         super(context);
@@ -13,50 +16,47 @@ public class ManageFavoritesCommand extends BaseCommand {
 
     @Override
     public void execute() {
+        LOGGER.info("Executing ManageFavoritesCommand");
         Scanner scanner = context.getScanner();
-        boolean back = false;
+        TourCatalogManager catalogManager = context.getCatalogManager();
 
+        boolean back = false;
         while (!back) {
-            System.out.println("--- Favorite tours ---");
-            System.out.println("1 - Show favorite tours");
+            System.out.println("=== Favorites menu ===");
+            System.out.println("1 - Show favorites");
             System.out.println("2 - Add tour to favorites");
             System.out.println("3 - Remove tour from favorites");
             System.out.println("4 - Back to main menu");
 
-            int choice = ConsoleInputUtils.readIntInRange(scanner, "Choose option (1-4): ", 1, 4);
-
+            int choice = ConsoleInputUtils.readIntInRange(scanner, "Enter option: ", 1, 4);
             switch (choice) {
                 case 1:
-                    List<Tour> favorites = context.getCatalogManager().getFavoriteTours();
-                    if (favorites.isEmpty()) {
-                        System.out.println("Favorite list is empty.");
-                    } else {
-                        for (Tour tour : favorites) {
-                            System.out.println(tour);
-                        }
+                    catalogManager.manageFavorites();
+                    break;
+                case 2: {
+                    long id = ConsoleInputUtils.readLong(scanner, "Enter tour id to add to favorites: ");
+                    boolean ok = catalogManager.addToFavorites(id);
+                    if (!ok) {
+                        System.out.println("Cannot add tour to favorites. Check id.");
                     }
                     break;
-                case 2:
-                    long addId = ConsoleInputUtils.readLong(scanner, "Enter tour id to add to favorites: ");
-                    if (context.getCatalogManager().addToFavorites(addId)) {
-                        System.out.println("Tour added to favorites.");
-                    } else {
-                        System.out.println("Failed to add tour to favorites (tour not found or already in list).");
+                }
+                case 3: {
+                    long id = ConsoleInputUtils.readLong(scanner, "Enter tour id to remove from favorites: ");
+                    boolean ok = catalogManager.removeFromFavorites(id);
+                    if (!ok) {
+                        System.out.println("Cannot remove tour from favorites. Check id.");
                     }
                     break;
-                case 3:
-                    long removeId = ConsoleInputUtils.readLong(scanner, "Enter tour id to remove from favorites: ");
-                    if (context.getCatalogManager().removeFromFavorites(removeId)) {
-                        System.out.println("Tour removed from favorites.");
-                    } else {
-                        System.out.println("Tour not found in favorites.");
-                    }
-                    break;
+                }
                 case 4:
                     back = true;
                     break;
+                default:
+                    LOGGER.warning("Unknown favorites menu option: " + choice);
             }
-            System.out.println();
         }
+
+        LOGGER.info("ManageFavoritesCommand finished");
     }
 }

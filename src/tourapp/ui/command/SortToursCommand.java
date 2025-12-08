@@ -1,12 +1,15 @@
 package tourapp.ui.command;
 
 import tourapp.model.SortField;
-import tourapp.model.Tour;
+import tourapp.core.TourCatalogManager;
+import tourapp.logging.LoggingConfig;
 
-import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class SortToursCommand extends BaseCommand {
+
+    private static final Logger LOGGER = LoggingConfig.getLogger(SortToursCommand.class);
 
     public SortToursCommand(ApplicationContext context) {
         super(context);
@@ -14,13 +17,16 @@ public class SortToursCommand extends BaseCommand {
 
     @Override
     public void execute() {
+        LOGGER.info("Executing SortToursCommand");
         Scanner scanner = context.getScanner();
-        System.out.println("--- Sort tours ---");
-        System.out.println("1 - by price");
-        System.out.println("2 - by days");
-        System.out.println("3 - by rating");
+        TourCatalogManager catalogManager = context.getCatalogManager();
 
-        int choice = ConsoleInputUtils.readIntInRange(scanner, "Choose sort field (1-3): ", 1, 3);
+        System.out.println("Choose sort field:");
+        System.out.println("1 - price");
+        System.out.println("2 - days");
+        System.out.println("3 - rating");
+
+        int choice = ConsoleInputUtils.readIntInRange(scanner, "Enter option: ", 1, 3);
         SortField field;
         switch (choice) {
             case 1:
@@ -37,16 +43,6 @@ public class SortToursCommand extends BaseCommand {
         }
 
         boolean ascending = ConsoleInputUtils.readYesNo(scanner, "Sort ascending?");
-        List<Tour> sorted = context.getCatalogManager().getToursSortedBy(field, ascending);
-
-        if (sorted.isEmpty()) {
-            System.out.println("No tours to sort.");
-            return;
-        }
-
-        System.out.println("Sorted tours:");
-        for (Tour tour : sorted) {
-            System.out.println(tour);
-        }
+        catalogManager.sortTours(field, ascending);
     }
 }

@@ -1,8 +1,14 @@
 package tourapp.ui.command;
 
+import tourapp.core.TourCatalogManager;
+import tourapp.logging.LoggingConfig;
+
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class SaveToFileCommand extends BaseCommand {
+
+    private static final Logger LOGGER = LoggingConfig.getLogger(SaveToFileCommand.class);
 
     public SaveToFileCommand(ApplicationContext context) {
         super(context);
@@ -10,15 +16,17 @@ public class SaveToFileCommand extends BaseCommand {
 
     @Override
     public void execute() {
+        LOGGER.info("Executing SaveToFileCommand");
         Scanner scanner = context.getScanner();
-        System.out.print("Enter path to file for saving catalog: ");
-        String path = scanner.nextLine().trim();
+        TourCatalogManager catalogManager = context.getCatalogManager();
 
+        System.out.print("Enter file path to save: ");
+        String path = scanner.nextLine().trim();
         if (path.isEmpty()) {
-            System.out.println("Path cannot be empty.");
+            LOGGER.info("No file path entered, skipping save");
+            System.out.println("Path is empty. Nothing to save.");
             return;
         }
-
-        context.getCatalogManager().saveToFile(path);
+        catalogManager.saveToFile(path);
     }
 }
